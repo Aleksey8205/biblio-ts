@@ -1,0 +1,15 @@
+{
+  "name": "biblio-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --p ./tsconfig.json --watch"
+  },
+  "author": "Aleksey8205",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
