@@ -10,6 +10,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "inversify": "^7.10.3",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@types/inversify": "^2.0.32",
+    "reflect-metadata": "^0.2.2",
+    "ts-node": "^10.9.2"
   }
 }
