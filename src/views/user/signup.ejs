@@ -1,0 +1,14 @@
+<%- include('../port/layout-start', {title: title}) %>
+    <form  action="/api/user/signup" method="POST">
+        <label>Логин</label><br>
+        <input type="text" name="username" placeholder="Логин" required><br>
+
+        <label>Email</label><br>
+        <input type="email" name="email" placeholder="Почта" required><br>
+
+        <label>Пароль</label><br>
+        <input type="password" name="password" placeholder="Пароль" required><br>
+        
+        <button type="submit">Регистрация</button>
+    </form>
+<%- include('../port/layout-end') %>

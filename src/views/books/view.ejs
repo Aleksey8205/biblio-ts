@@ -1,0 +1,88 @@
+<%- include('../port/layout-start', {title: title}) %>
+<div >
+    <div >
+        <h1><%= title %></h1>
+        <%- include('../port/menu') %>
+    </div>
+    <h1><%= book.title %></h1>
+    <p><%= book.description %></p>
+    <p><%= book.authors %></p>
+    <p>Количество просмотров: <%= book.viewCount %></p>
+    <p> файл <%= book.fileCover %></p>
+    <p> файл <%= book.fileName %></p>
+    <% if(book.favorite === true) { %>
+        <p>Любимая книга</p>
+    <% } else { %>
+        <p>Книга еще не добавлена в любимые</p>
+    <% } %>
+</div>
+
+<div id="comments-section">
+    <h2>Комментарии:</h2>
+    <ul id="comments-list">
+      <% if(comments.length > 0) { %>
+        <% comments.forEach(comment => { %>
+          <li>
+            <b><%= comment.author %></b> написал(<%= new Date(comment.createdAt).toLocaleString() %>):
+            <p><%= comment.content %></p>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <p>Пока нет комментариев.</p>
+      <% } %>
+    </ul>
+  
+    <h2>Оставить комментарий:</h2>
+    <form id="comment-form">
+      <label for="author">Имя автора:</label>
+      <% if (user && user.username) { %>
+        <p><%= user.username %></p><br/>
+      <% } else { %>
+        <input type="text" name="author" placeholder="Ваше имя" required/><br/>
+      <% } %>
+      <label for="content">Комментарий:</label>
+      <textarea name="content" required></textarea><br/>
+      <button type="submit">Отправить</button>
+    </form>
+  </div>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const form = document.querySelector('#comment-form');
+  const list = document.querySelector('#comments-list');
+
+  const socket = io();
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const bookId = '<%= book._id %>';
+    const author = data.get('author') || '<%= user ? user.username : "" %>';
+    const content = data.get('content');
+
+
+    const comment = {
+      author,
+      content,
+      createdAt: Date.now()
+    };
+
+    socket.emit('newComment', { bookId, comment });
+
+    form.reset();
+  });
+
+  socket.on('commentAdded', ({ bookId, comment }) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <strong>${comment.author}</strong> написал(${new Date(comment.createdAt).toLocaleString()}):
+      <p>${comment.content}</p>
+    `;
+    list.appendChild(li);
+  });
+</script>
+
+<%- include('../port/layout-end') %>

@@ -1,0 +1,11 @@
+<%- include('../port/layout-start', {title: title}) %>
+    <form  action="/api/user/login" method="POST">
+        <label>Логин</label><br>
+        <input type="text" name="username" placeholder="Логин" required><br>
+
+        <label>Пароль</label><br>
+        <input type="password" name="password" placeholder="Пароль" required><br>
+        
+        <button type="submit">Вход</button>
+    </form>
+<%- include('../port/layout-end') %>

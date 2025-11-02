@@ -1,6 +1,6 @@
-import { Book } from "../interfaces/book";
+import { Book } from "../interfaces/book.ts";
 
- export abstract class BooksRepository {
+export abstract class BooksRepository {
   abstract createBook(book: Book): void;
   abstract getBook(id: number): Book | null;
   abstract getBooks(): Book[];
